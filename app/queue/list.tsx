@@ -5,51 +5,55 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { getJobQueue } from '@/lib/queue';
-import { JobRecord } from 'pg-bg-job-queue';
-import { formatTimeDistance } from '@/lib/utils';
-import Link from 'next/link';
+} from "@/components/ui/table";
+import { getJobQueue } from "@/lib/queue";
+import { JobRecord } from "pg-bg-job-queue";
+import { formatTimeDistance } from "@/lib/utils";
+import Link from "next/link";
 
 export const PendingJobs = async () => {
   const jobQueue = await getJobQueue();
-  const jobs = await jobQueue.getJobsByStatus('pending');
+  const jobs = await jobQueue.getJobsByStatus("pending");
   return <JobTable jobs={jobs} />;
 };
 
 export const ProcessingJobs = async () => {
   const jobQueue = await getJobQueue();
-  const jobs = await jobQueue.getJobsByStatus('processing');
+  const jobs = await jobQueue.getJobsByStatus("processing");
   return <JobTable jobs={jobs} />;
 };
 
 export const CompletedJobs = async () => {
   const jobQueue = await getJobQueue();
-  const jobs = await jobQueue.getJobsByStatus('completed');
+  const jobs = await jobQueue.getJobsByStatus("completed");
   return <JobTable jobs={jobs} />;
 };
 
 export const FailedJobs = async () => {
   const jobQueue = await getJobQueue();
-  const jobs = await jobQueue.getJobsByStatus('failed');
+  const jobs = await jobQueue.getJobsByStatus("failed");
   const noRetryJobs = jobs.filter((job) => job.attempts === job.max_attempts);
   return <JobTable jobs={noRetryJobs} />;
 };
 
 export const CancelledJobs = async () => {
   const jobQueue = await getJobQueue();
-  const jobs = await jobQueue.getJobsByStatus('cancelled');
+  const jobs = await jobQueue.getJobsByStatus("cancelled");
   return <JobTable jobs={jobs} />;
 };
 
 export const WillRetryFailedJobs = async () => {
   const jobQueue = await getJobQueue();
-  const jobs = await jobQueue.getJobsByStatus('failed');
+  const jobs = await jobQueue.getJobsByStatus("failed");
   const jobsToRetry = jobs.filter((job) => job.attempts < job.max_attempts);
   return <JobTable jobs={jobsToRetry} />;
 };
 
-const JobTable = ({ jobs }: { jobs: JobRecord<unknown>[] }) => {
+const JobTable = ({
+  jobs,
+}: {
+  jobs: JobRecord<Record<string, unknown>, string>[];
+}) => {
   return (
     <Table>
       <TableHeader>
@@ -76,15 +80,15 @@ const JobTable = ({ jobs }: { jobs: JobRecord<unknown>[] }) => {
               </Link>
             </TableCell>
             <TableCell>{job.job_type}</TableCell>
-            <TableCell>{job.priority ? job.priority : 'default'}</TableCell>
+            <TableCell>{job.priority ? job.priority : "default"}</TableCell>
             <TableCell>
-              {job.run_at ? formatTimeDistance(job.run_at) : '-'}
+              {job.run_at ? formatTimeDistance(job.run_at) : "-"}
             </TableCell>
             <TableCell>{job.attempts}</TableCell>
             <TableCell>
               {job.next_attempt_at
                 ? formatTimeDistance(job.next_attempt_at)
-                : '-'}
+                : "-"}
             </TableCell>
             <TableCell>{JSON.stringify(job.payload)}</TableCell>
             <TableCell>{job.created_at.toISOString()}</TableCell>

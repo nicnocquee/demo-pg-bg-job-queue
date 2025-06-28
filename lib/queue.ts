@@ -1,6 +1,6 @@
-import { initJobQueue } from 'pg-bg-job-queue';
-import { sendEmail } from './services/email';
-import { generateReport } from './services/generate-report';
+import { initJobQueue } from "pg-bg-job-queue";
+import { sendEmail } from "./services/email";
+import { generateReport } from "./services/generate-report";
 
 // Define the job payload map for this app.
 // This will ensure that the job payload is typed correctly when adding jobs.
@@ -25,12 +25,8 @@ export const getJobQueue = async () => {
     jobQueuePromise = initJobQueue<JobPayloadMap>({
       databaseConfig: {
         connectionString: process.env.PG_BG_JOB_QUEUE_DATABASE, // Set this in your environment
-        ssl:
-          process.env.NODE_ENV === 'production'
-            ? { rejectUnauthorized: false }
-            : undefined,
       },
-      verbose: process.env.NODE_ENV === 'development',
+      verbose: process.env.NODE_ENV === "development",
     });
   }
   return jobQueuePromise;
