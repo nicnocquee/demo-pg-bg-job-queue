@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useTransition } from 'react';
-import { formatDistanceToNow } from 'date-fns';
+import { useEffect, useState, useTransition } from "react";
+import { formatDistanceToNow } from "date-fns";
 
 export const RefreshPeriodically = ({
   interval = 5000,
@@ -30,8 +30,8 @@ export const RefreshPeriodically = ({
   return (
     <div className="flex flex-row space-x-2 text-sm text-muted-foreground">
       <p>
-        Last refresh: {lastRun ? formatDistanceToNow(lastRun) : 'Never'}. Is
-        refreshing: {isRunning ? 'Yes' : 'No'}
+        Last refresh: {lastRun ? formatDistanceToNow(lastRun) : "Never"}.{" "}
+        {isRunning ? "Refreshing..." : ""}
       </p>
     </div>
   );
