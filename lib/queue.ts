@@ -1,4 +1,4 @@
-import { initJobQueue } from "pg-bg-job-queue";
+import { initJobQueue } from "@nicnocquee/dataqueue";
 import { sendEmail } from "./services/email";
 import { generateReport } from "./services/generate-report";
 
@@ -24,7 +24,7 @@ export const getJobQueue = async () => {
   if (!jobQueuePromise) {
     jobQueuePromise = initJobQueue<JobPayloadMap>({
       databaseConfig: {
-        connectionString: process.env.PG_BG_JOB_QUEUE_DATABASE, // Set this in your environment
+        connectionString: process.env.PG_DATAQUEUE_DATABASE, // Set this in your environment
       },
       verbose: process.env.NODE_ENV === "development",
     });

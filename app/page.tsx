@@ -1,4 +1,4 @@
-import Buttons from './buttons';
+import Buttons from "./buttons";
 import {
   CancelledJobs,
   CompletedJobs,
@@ -6,17 +6,17 @@ import {
   PendingJobs,
   ProcessingJobs,
   WillRetryFailedJobs,
-} from './queue/list';
-import { refresh } from './queue/refresh';
-import { RefreshPeriodically } from './refresh-periodically';
+} from "./queue/list";
+import { refresh } from "./queue/refresh";
+import { RefreshPeriodically } from "./refresh-periodically";
 
 export default function Home() {
   return (
     <div className="flex flex-col gap-2 p-4 space-y-4">
       <div>
-        <h1 className="text-2xl font-bold">Demo</h1>
+        <h1 className="text-2xl font-bold">Dataqueue Demo</h1>
         <p className="text-lg">
-          This is a demo of the job queue. When run via <code>pnpm dev</code>{' '}
+          This is a demo of the job queue. When run via <code>pnpm dev</code>{" "}
           from the root, the <code>api/cron/process</code> endpoint will be
           called every 10 seconds.
         </p>
